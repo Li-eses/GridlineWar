@@ -1,17 +1,28 @@
-// main.ts
 const rooms = new Map<string, Set<WebSocket>>();
 
 Deno.serve((req) => {
     const url = new URL(req.url);
     const roomId = url.searchParams.get('room');
+
+    // 1. 如果没有 room 参数，直接拒绝
     if (!roomId) return new Response('missing room', { status: 400 });
 
+    // ★ 核心修复：检查请求头，确保真的是 WebSocket 请求，否则返回普通提示，防止后端崩溃
+    const upgradeHeader = req.headers.get("upgrade");
+    if (!upgradeHeader || upgradeHeader.toLowerCase() !== "websocket") {
+        return new Response("信令服务器运行正常！(这是一个 WebSocket 接口，请通过游戏客户端连接)", {
+            status: 400,
+            headers: { "content-type": "text/plain; charset=utf-8" }
+        });
+    }
+
+    // 2. 安检通过，升级为 WebSocket
     const { socket, response } = Deno.upgradeWebSocket(req);
 
     socket.onopen = () => {
         if (!rooms.has(roomId)) rooms.set(roomId, new Set());
         const room = rooms.get(roomId)!;
-        
+
         // 1v1 限制：如果房间已经有 2 个人，拒绝加入
         if (room.size >= 2) {
             socket.send(JSON.stringify({ type: 'error', msg: '房间已满' }));
