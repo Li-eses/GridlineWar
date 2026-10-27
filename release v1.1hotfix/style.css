@@ -1,0 +1,339 @@
+* {
+    box-sizing: border-box
+}
+
+body {
+    font-family: Segoe UI, Tahoma, sans-serif;
+    background: #2c3e50;
+    color: #fff;
+    margin: 0;
+    min-height: 100vh
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: #000d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10
+}
+
+.modal {
+    background: #34495e;
+    padding: 32px;
+    border-radius: 12px;
+    min-width: 340px;
+    text-align: center;
+    box-shadow: 0 15px 30px #0008
+}
+
+.modal label {
+    display: block;
+    margin: 14px
+}
+
+.modal select {
+    padding: 7px;
+    margin-left: 8px
+}
+
+.btn-main {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border: 0;
+    border-radius: 7px;
+    background: #3498db;
+    color: white;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.btn-main.advanced {
+    background: #9b59b6
+}
+
+.game-layout {
+    display: flex;
+    gap: 18px;
+    background: #34495e;
+    padding: 18px;
+    margin: 18px;
+    border-radius: 12px
+}
+
+.control-panel {
+    width: 275px;
+    flex: none;
+    display: flex;
+    flex-direction: column
+}
+
+.status, .hint {
+    background: #2c3e50;
+    padding: 9px;
+    border-radius: 7px
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.action-btn {
+    padding: 10px;
+    border: 0;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.action-btn:disabled, .action-btn.disabled {
+    background: #7f8c8d;
+    color: #bdc3c7;
+    cursor: not-allowed;
+    opacity: .75
+}
+
+.variant-panel {
+    margin-top: 12px;
+    background: #8e44ad;
+    padding: 10px;
+    border-radius: 6px
+}
+
+.variant-panel select {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 6px
+}
+
+.hint {
+    margin-top: 10px;
+    min-height: 90px;
+    color: #f1c40f
+}
+
+.hint p {
+    margin: 3px 0
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0 4px;
+    color: #aaa;
+    font-size: 12px
+}
+
+.btn-clear {
+    background: none;
+    color: #aaa;
+    border: 1px solid #777;
+    border-radius: 4px
+}
+
+.log-container {
+    height: 110px;
+    overflow: auto;
+    background: #1e1e1e;
+    padding: 7px;
+    border-radius: 6px;
+    font: 12px Consolas, monospace
+}
+
+.log-err {
+    color: #e74c3c
+}
+
+.log-warn {
+    color: #f1c40f
+}
+
+.log-success {
+    color: #2ecc71
+}
+
+.minimap-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 9px
+}
+
+.btn-restart {
+    margin-top: 10px;
+    padding: 9px;
+    background: #e74c3c;
+    color: white;
+    border: 0;
+    border-radius: 5px
+}
+
+.canvas-container {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: auto
+}
+
+#gameCanvas {
+    background: white;
+    max-width: 100%;
+    height: auto;
+    border-radius: 7px;
+    cursor: crosshair
+}
+
+#miniMapCanvas {
+    border: 2px solid #7f8c8d
+}
+
+.p1-color {
+    color: #3498db
+}
+
+.p2-color {
+    color: #e67e22
+}
+
+@media (max-width: 760px) {
+    .game-layout {
+        flex-direction: column;
+        margin: 0;
+        border-radius: 0
+    }
+
+    .control-panel {
+        width: 100%
+    }
+}
+
+.log-p1 {
+    color: #5dade2
+}
+
+.log-p2 {
+    color: #f0b27a
+}
+
+.log-success {
+    color: #58d68d
+}
+
+.log-container div {
+    padding: 2px 0;
+    border-bottom: 1px dashed #333;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere
+}
+
+/* 追加在文件末尾 */
+.log-sys { color: #9b59b6; font-weight: bold; } /* 系统紫 */
+.log-p1 { color: #5dade2; }                     /* P1 蓝 */
+.log-p2 { color: #f0b27a; }                     /* P2 橙 */
+.log-bot { color: #e67e22; font-style: italic; } /* AI 橙 */
+.log-rule { color: #f1c40f; }                   /* 规则黄 */
+.log-combat { color: #e74c3c; font-weight: bold; } /* 战斗红 */
+.log-success { color: #2ecc71; }                /* 成功绿 */
+.log-warn { color: #f39c12; }                   /* 警告橙黄 */
+
+/* ================= 酷炫启动界面 (Splash Screen) ================= */
+#splash-screen {
+    position: fixed;
+    inset: 0;
+    background-color: #0d1117;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    transition: opacity 1s ease-in-out;
+    overflow: hidden;
+}
+
+/* 赛博朋克网格背景 */
+#splash-screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(52, 152, 219, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 152, 219, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+    animation: gridMove 10s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(30px); }
+}
+
+/* 启动画面文字样式 */
+.splash-text {
+    position: relative;
+    z-index: 10;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.5s ease forwards;
+}
+
+.splash-title {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: #f1c40f;
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.5), 0 0 20px rgba(241, 196, 15, 0.3);
+    margin-bottom: 30px;
+    animation-delay: 0.5s;
+}
+
+.splash-credit {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #3498db;
+    text-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    animation-delay: 1.5s;
+}
+
+.splash-credit2 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #e67e22;
+    text-shadow: 0 0 8px rgba(230, 126, 34, 0.5);
+    animation-delay: 2.2s;
+}
+
+.splash-thanks {
+    position: absolute;
+    bottom: 30px;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+    animation-delay: 3s;
+    z-index: 10;
+}
+
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* 淡出动画类 */
+.fade-out {
+    opacity: 0 !important;
+    pointer-events: none;
+}

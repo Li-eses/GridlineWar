@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!-- saved from url=(0120)file:///C:/Users/45077/Desktop/%E6%A0%BC%E7%BA%BF%E6%88%98%E4%BA%89%20%E8%A7%84%E5%88%99%E8%AF%B4%E6%98%8E%E4%B9%A6.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>格线战争 规则说明书</title>
+<style>
+  :root{ --bg:#f6f7f9; --card:#fff; --ink:#212529; --muted:#6c757d; --danger:#dc3545; --border:#dee2e6; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.35;font-size:13px;padding:8px;}
+  .manual{width:100%;}
+  header{width:100%;text-align:center;padding:14px;background:#212529;color:#fff;border-radius:8px;margin-bottom:8px;}
+  header h1{font-size:22px;letter-spacing:1px;font-weight:800;margin-bottom:2px;}
+  header p{font-size:11px;opacity:.75;}
+  .card{width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;}
+  h2{font-size:15px;margin-bottom:8px;padding-bottom:5px;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:6px;}
+  h2 .icon-svg{width:18px;height:18px;}
+  h3{font-size:13px;margin:10px 0 4px;color:#343a40;font-weight:800;border-left:3px solid var(--ink);padding-left:6px;}
+  p,li{font-size:12.5px;color:#495057;}
+  ul,ol{padding-left:16px;margin:4px 0;}
+  li{margin-bottom:3px;}
+  strong{color:#212529;font-weight:800;}
+  .text-muted{color:var(--muted);font-size:11px;}
+  .text-danger{color:var(--danger);font-weight:800;}
+  .icon-svg{width:18px;height:18px;display:inline-block;vertical-align:middle;color:var(--ink);fill:none;}
+  .cols-2{display:grid;gap:8px;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));}
+  @media(max-width:720px){.cols-2{grid-template-columns:1fr;}}
+
+  .alert{padding:6px 8px;border-radius:6px;margin:6px 0;font-size:11px;border:1px solid transparent;}
+  .alert-warn{background:#fff3cd;color:#664d03;border-color:#ffecb5;}
+  .alert-info{background:#cfe2ff;color:#084298;border-color:#b6d4fe;}
+
+  .board{height:auto;background:#fff;border:1px solid #ced4da;border-radius:3px;display:block;}
+  .board use{color:#212529;fill:#fff;}
+  .board-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;margin:4px 0;}
+  .diagram-title{font-size:10px;font-weight:800;color:var(--muted);text-align:center;}
+  .before-after{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;}
+  .ba-arrow{font-size:14px;font-weight:900;color:var(--muted);}
+  .example-note{font-size:10px;color:var(--muted);line-height:1.3;}
+
+  .flow-map{width:100%;display:grid;gap:5px;margin-top:6px;}
+  .flow-row{display:grid;grid-template-columns:200px 1fr;gap:8px;align-items:stretch;}
+  @media(max-width:760px){.flow-row{grid-template-columns:1fr;}}
+  .flow-node{border:1px solid var(--border);border-radius:6px;padding:8px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;background:#fff;min-height:44px;font-size:12px;}
+  .flow-node.start{background:#e7f1ff;border-color:#9ec5fe;color:#084298;}
+  .flow-node.check{background:#fff8e6;border-color:#ffe08a;color:#664d03;}
+  .flow-node.resolve{background:#f8d7da;border-color:#f5c2c7;color:#842029;}
+  .flow-outcomes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;}
+  .flow-outcome{border:1px solid var(--border);border-left:4px solid var(--ink);border-radius:6px;padding:6px 8px;background:#fff;font-size:11px;color:#495057;}
+  .flow-outcome.single{grid-column:1/-1;}
+  .flow-outcome.no{border-left-color:var(--danger);}
+  .flow-outcome.yes{border-left-color:#198754;}
+  .outcome-label{display:inline-block;font-weight:900;margin-right:4px;}
+  .outcome-label.no{color:var(--danger);}
+  .outcome-label.yes{color:#198754;}
+  .flow-connector{display:flex;justify-content:center;color:var(--muted);font-weight:900;font-size:14px;line-height:1;margin:-2px 0;}
+
+  .mut-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:start;border:1px solid var(--border);border-radius:6px;padding:8px;background:#fff;margin-bottom:8px;}
+  @media(max-width:760px){.mut-row{grid-template-columns:1fr;}}
+  .mut-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+  .variant-icon{width:28px;height:28px;border-radius:5px;background:#f8f9fa;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .variant-icon .icon-svg{width:18px;height:18px;}
+  .variant-name{font-size:13px;font-weight:900;}
+  .variant-tag{font-size:10px;padding:1px 5px;border-radius:10px;background:#e9ecef;color:#495057;white-space:nowrap;}
+  .variant-desc{font-size:11px;color:#495057;}
+  .mut-ex{display:flex;flex-direction:column;gap:4px;align-items:center;border-left:1px dashed var(--border);padding-left:8px;}
+  @media(max-width:760px){.mut-ex{border-left:none;padding-left:0;}}
+  table{width:100%;border-collapse:collapse;margin:4px 0;font-size:11px;}
+  th,td{border:1px solid var(--border);padding:4px 6px;text-align:left;vertical-align:top;}
+  th{background:#f8f9fa;font-weight:800;}
+  footer{width:100%;text-align:center;padding:10px;color:var(--muted);font-size:11px;border-top:1px solid var(--border);}
+  @media print{
+    body{background:#fff;padding:0;font-size:11px;}
+    .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid;margin-bottom:6px;}
+    header{background:#fff;color:#000;border:2px solid #000;}
+    header h1,header p{color:#000;}
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none;" aria-hidden="true">
+  <symbol id="i-branch" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle></symbol>
+  <symbol id="i-trunk" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14"></rect></symbol>
+  <symbol id="i-mother" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 14.9,8.6 22,9.2 16.6,13.9 18.4,21 12,17.2 5.6,21 7.4,13.9 2,9.2 9.1,8.6"></polygon></symbol>
+  <symbol id="i-corpse" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L18 18 M18 6 L6 18"></path></symbol>
+  <symbol id="i-virus" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5.28 5.28 A9.5 4.6 45 1 0 18.72 18.72 A9.5 4.6 45 1 0 5.28 5.28 M18.72 5.28 A9.5 4.6 -45 1 0 5.28 18.72 A9.5 4.6 -45 1 0 18.72 5.28"></path>
+  </symbol>
+  <symbol id="i-crystal" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,3 21,19 3,19"></polygon><polygon points="7.5,11 16.5,11 12,19"></polygon></symbol>
+  <symbol id="i-ban" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><line x1="6" y1="18" x2="18" y2="6"></line></symbol>
+  <symbol id="i-bomb" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6 L12 12 L20 6 M4 6 L4 18 L20 18 L20 6"></path></symbol>
+  <symbol id="i-phage" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle></symbol>
+  <symbol id="i-gene" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 Z M18 6 L12 12 L18 18 Z"></path></symbol>
+  <symbol id="i-tumor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"></circle><path d="M8.5 8.5 L12 12 L8.5 15.5 Z M15.5 8.5 L12 12 L15.5 15.5 Z"></path></symbol>
+</svg>
+
+<div class="manual">
+  <header>
+    <h1>格线战争</h1>
+    <p>GRID WAR v3.6</p>
+  </header>
+
+  <section class="card">
+    <h2> 1. 游戏目标</h2>
+    <p><strong>胜利条件：</strong>消灭敌方【母体】。己方【母体】被消灭则立即失败；或在限定轮数结束之后哪一方的活体单元离母体近，哪方获胜。</p>
+    <p><strong>纸质版游戏材料：</strong>方格纸、铅笔、橡皮。双方各选一格画己方母体，建议相距不少于 10 格。</p>
+  </section>
+
+  <section class="card">
+    <h2> 2. 元素规则</h2>
+
+    <h3>2.1 母体</h3>
+    <ul>
+      <li>核心基地，画在一个格子内。</li>
+      <li>不可移动、不可攻击。</li>
+      <li>被消灭时，所属玩家立即失败。</li>
+    </ul>
+
+    <div class="cols-2">
+      <div>
+        <h3>2.2 主干</h3>
+        <ul>
+          <li>支撑网络；从母体或已有主干任意部位生长，<strong>必须用横线连接</strong>。</li>
+          <li>可向周围 8 格生长（直 / 斜），可以分叉。</li>
+          <li>不可攻击；每回合最多生长 3 格，之后冷却 1 回合。</li>
+        </ul>
+        <div class="board-wrap">
+          <div class="diagram-title">示例：主干分叉与斜向生长</div>
+          <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+            <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#eef0f2" fill="none"></path>
+            <g stroke="#212529" stroke-width="2.5" stroke-linecap="round">
+              <line x1="33" y1="60" x2="47" y2="60"></line>
+              <line x1="73" y1="60" x2="87" y2="60"></line>
+              <line x1="60" y1="33" x2="60" y2="47"></line>
+              <line x1="60" y1="73" x2="60" y2="87"></line>
+              <line x1="69.2" y1="69.2" x2="90.8" y2="90.8"></line>
+            </g>
+            <use href="#i-trunk" x="48" y="8" width="24" height="24"></use>
+            <use href="#i-mother" x="8" y="48" width="24" height="24"></use>
+            <use href="#i-trunk" x="48" y="48" width="24" height="24"></use>
+            <use href="#i-trunk" x="88" y="48" width="24" height="24"></use>
+            <use href="#i-trunk" x="48" y="88" width="24" height="24"></use>
+            <use href="#i-trunk" x="88" y="88" width="24" height="24"></use>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <h3>2.3 分支</h3>
+        <ul>
+          <li>作战单位；只能从主干生长，<strong>必须用横线连接</strong>。</li>
+          <li>可向周围 8 格移动（直 / 斜）；不可分叉。</li>
+          <li>每回合行动 1 次：移动 1 格或攻击 1 次。</li>
+        </ul>
+        <div class="board-wrap">
+          <div class="diagram-title">示例：分支单线（最右为头部）</div>
+          <svg class="board" style="width:144px;" viewBox="0 0 160 40">
+            <path d="M40 0V40M80 0V40M120 0V40" stroke="#eef0f2" fill="none"></path>
+            <g stroke="#212529" stroke-width="2.5" stroke-linecap="round">
+              <line x1="33" y1="20" x2="47" y2="20"></line>
+              <line x1="73" y1="20" x2="87" y2="20"></line>
+              <line x1="113" y1="20" x2="127" y2="20"></line>
+            </g>
+            <use href="#i-trunk" x="8" y="8" width="24" height="24"></use>
+            <use href="#i-branch" x="48" y="8" width="24" height="24"></use>
+            <use href="#i-branch" x="88" y="8" width="24" height="24"></use>
+            <use href="#i-branch" x="128" y="8" width="24" height="24"></use>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <h3>2.4 尸体</h3>
+    <ul>
+      <li>死亡残留；单位死亡后转化为尸体，尸体占格。</li>
+      <li>尸体受到攻击时直接消失。</li>
+    </ul>
+    <div class="board-wrap">
+      <div class="diagram-title">示例：分支攻击相邻尸体，尸体消失</div>
+      <div class="before-after">
+        <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+          <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#eef0f2" fill="none"></path>
+          <line x1="60" y1="73" x2="60" y2="87" stroke="#212529" stroke-width="2.5" stroke-linecap="round"></line>
+          <use href="#i-corpse" x="48" y="8" width="24" height="24"></use>
+          <use href="#i-branch" x="48" y="48" width="24" height="24"></use>
+          <use href="#i-branch" x="48" y="88" width="24" height="24"></use>
+        </svg>
+        <div class="ba-arrow">→</div>
+        <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+          <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#eef0f2" fill="none"></path>
+          <line x1="60" y1="73" x2="60" y2="87" stroke="#212529" stroke-width="2.5" stroke-linecap="round"></line>
+          <text x="60" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#adb5bd">空</text>
+          <use href="#i-branch" x="48" y="48" width="24" height="24"></use>
+          <use href="#i-branch" x="48" y="88" width="24" height="24"></use>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2> 3. 核心机制</h2>
+
+    <h3>3.1 攻击规则</h3>
+    <ul>
+      <li>只有分支头部可以攻击；范围为前、后、左、右 4 格（不含斜向）。</li>
+      <li>无特殊说明时，被攻击单位死亡；目标是尸体则尸体消失。</li>
+      <li>母体被攻击死亡，游戏立即结束。</li>
+    </ul>
+    <div class="board-wrap">
+      <div class="diagram-title">示例：头部攻击范围（⚔️ = 可攻击格）</div>
+      <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+        <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#eef0f2" fill="none"></path>
+        <use href="#i-branch" x="48" y="48" width="24" height="24"></use>
+        <text x="60" y="25" text-anchor="middle" font-size="16">⚔️</text>
+        <text x="20" y="65" text-anchor="middle" font-size="16">⚔️</text>
+        <text x="100" y="65" text-anchor="middle" font-size="16">⚔️</text>
+        <text x="60" y="105" text-anchor="middle" font-size="16">⚔️</text>
+      </svg>
+    </div>
+
+    <h3>3.2 连锁死亡</h3>
+    <ul><li>某一节死亡时，<strong>从死亡处到头部</strong>的全部相连节段均死亡并转化为尸体；靠近主干一侧不受影响（除非效果为“消失”）。</li></ul>
+    <div class="board-wrap">
+      <div class="diagram-title">示例：连锁死亡（只死向头部一侧）</div>
+      <div class="before-after">
+        <svg class="board" style="width:144px;" viewBox="0 0 160 40">
+          <path d="M40 0V40M80 0V40M120 0V40" stroke="#eef0f2" fill="none"></path>
+          <g stroke="#212529" stroke-width="2.5" stroke-linecap="round">
+            <line x1="33" y1="20" x2="47" y2="20"></line><line x1="73" y1="20" x2="87" y2="20"></line><line x1="113" y1="20" x2="127" y2="20"></line>
+          </g>
+          <use href="#i-trunk" x="8" y="8" width="24" height="24"></use><use href="#i-branch" x="48" y="8" width="24" height="24"></use>
+          <use href="#i-branch" x="88" y="8" width="24" height="24"></use><use href="#i-branch" x="128" y="8" width="24" height="24"></use>
+        </svg>
+        <div class="ba-arrow">→</div>
+        <svg class="board" style="width:144px;" viewBox="0 0 160 40">
+          <path d="M40 0V40M80 0V40M120 0V40" stroke="#eef0f2" fill="none"></path>
+          <g stroke="#212529" stroke-width="2.5" stroke-linecap="round">
+            <line x1="33" y1="20" x2="47" y2="20"></line><line x1="73" y1="20" x2="87" y2="20"></line><line x1="113" y1="20" x2="127" y2="20"></line>
+          </g>
+          <use href="#i-trunk" x="8" y="8" width="24" height="24"></use><use href="#i-branch" x="48" y="8" width="24" height="24"></use>
+          <use href="#i-corpse" x="88" y="8" width="24" height="24"></use><use href="#i-corpse" x="128" y="8" width="24" height="24"></use>
+        </svg>
+      </div>
+      <div class="example-note">第 3 节死亡 → 仅从死亡处到头部变尸体；靠主干一侧保留存活。</div>
+    </div>
+
+    <h3>3.3 挤死机制</h3>
+<p>当一个非尸体单位的前后左右四格内都被占据时，被挤死，并变为尸体。</p>
+<div class="board-wrap">
+  <div class="diagram-title">示例：四格全满 → 挤死→ 变为尸体</div>
+  <div class="before-after">
+    <!-- 被挤死前 -->
+    <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+      
+      
+      
+      
+      
+      <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#dee2e6" fill="none"></path>
+      <use href="#i-trunk" x="48" y="8" width="24" height="24"></use>
+      <use href="#i-corpse" x="8" y="48" width="24" height="24"></use>
+      <use href="#i-branch" x="88" y="48" width="24" height="24"></use>
+      <use href="#i-trunk" x="48" y="88" width="24" height="24"></use>
+      <use href="#i-branch" x="48" y="48" width="24" height="24"></use>
+    </svg>
+    <div class="ba-arrow">→</div>
+    <!-- 被挤死后：中心单位变为尸体 -->
+    <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+      
+      
+      
+      
+      
+      <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#dee2e6" fill="none"></path>
+      <use href="#i-trunk" x="48" y="8" width="24" height="24"></use>
+      <use href="#i-corpse" x="8" y="48" width="24" height="24"></use>
+      <use href="#i-branch" x="88" y="48" width="24" height="24"></use>
+      <use href="#i-trunk" x="48" y="88" width="24" height="24"></use>
+      <use href="#i-corpse" x="48" y="48" width="24" height="24"></use>
+    </svg>
+  </div>
+  <div class="example-note">左：中心分支前后左右四格全满。<br>右：触发挤死，中心分支变为尸体（×）；周围四个占据物保持不变。</div>
+</div>
+
+    <h3>3.4 生长互斥</h3>
+    <ul><li><div class="board-warp">选择生长一种东西后，就只能等下一轮生长其他的了。比如生长主干，那么这轮就无法生长分支了。</div></li></ul>
+
+    <h3>3.5 回合逻辑</h3>
+    <p class="text-muted">玩家行动完毕后，按以下顺序结算：</p>
+    <div class="flow-map">
+      <div class="flow-row">
+        <div class="flow-node start">一位玩家行动完毕</div>
+        <div class="flow-outcomes"><div class="flow-outcome single"><span class="outcome-label">结算：</span>处理移动、攻击、踩踏、禁用、技能等即时效果。</div></div>
+      </div>
+      <div class="flow-connector">↓</div>
+      <div class="flow-row">
+        <div class="flow-node check">判定 1：是否有非尸体单位被挤死？</div>
+        <div class="flow-outcomes">
+          <div class="flow-outcome no"><span class="outcome-label no">否</span>直接进入判定 2。</div>
+          <div class="flow-outcome yes"><span class="outcome-label yes">是</span>将被挤死单位标记为死亡，进入判定 2。</div>
+        </div>
+      </div>
+      <div class="flow-connector">↓</div>
+      <div class="flow-row">
+        <div class="flow-node check">判定 2：是否有单位死亡？</div>
+        <div class="flow-outcomes">
+          <div class="flow-outcome no"><span class="outcome-label no">否</span>回合结束，切换玩家。</div>
+          <div class="flow-outcome yes"><span class="outcome-label yes">是</span>连锁死亡：从死亡处到头部全部转化为尸体。</div>
+        </div>
+      </div>
+      <div class="flow-connector">↓</div>
+      <div class="flow-row">
+        <div class="flow-node resolve">连锁结算完成</div>
+        <div class="flow-outcomes"><div class="flow-outcome single"><span class="outcome-label">检查：</span>若任一母体死亡，游戏立即结束；否则进入下一回合。</div></div>
+      </div>
+    </div>
+    <div class="board-warp"><strong>*</strong>效果说明为“消失”的单位不转化为尸体（如尸体被攻击、爆炸范围、病毒踩踏）。</div>
+  </section>
+
+  <section class="card">
+    <h2> 4. 分支变异体</h2>
+    <div class="board-warp"><strong>全局限制：</strong>每种变异体场上同时最多存在 1 条。<strong>画法：</strong>变异分支每一节都画该变异体图标，头部 = 最末端一节。无特殊说明时遵循普通分支规则。每条变异体附对照图例。</div>
+
+    <!-- 噬体 -->
+    <div class="mut-row">
+      <div>
+        <div class="mut-head"><div class="variant-icon"><svg class="icon-svg"><use href="#i-phage"></use></svg></div><span class="variant-name">噬体</span><span class="variant-tag">生存</span></div>
+        <div class="variant-desc">① 不会被挤死。② 行动时可穿越尸体所在格子。</div>
+      </div>
+      <div class="mut-ex">
+        <div class="diagram-title">对照：四格全满，噬体仍不死亡</div>
+        <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+          <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#eef0f2" fill="none"></path>
+          <use href="#i-trunk" x="48" y="8" width="24" height="24"></use><use href="#i-corpse" x="8" y="48" width="24" height="24"></use>
+          <use href="#i-branch" x="88" y="48" width="24" height="24"></use><use href="#i-trunk" x="48" y="88" width="24" height="24"></use>
+          <use href="#i-phage" x="48" y="48" width="24" height="24"></use>
+        </svg>
+        <div class="example-note">同样局面下普通单位会被挤死（见 3.3），噬体免疫。</div>
+      </div>
+    </div>
+
+    <!-- 病毒 -->
+    <div class="mut-row">
+      <div>
+        <div class="mut-head"><div class="variant-icon"><svg class="icon-svg"><use href="#i-virus"></use></svg></div><span class="variant-name">病毒</span><span class="variant-tag">控制</span></div>
+        <div class="variant-desc">① <strong>踩踏：</strong>移入非尸体单位格，代替攻击将其覆盖。② <strong>禁用：</strong>耗 1 回合，使头部 3×3 内一条敌方分支瘫痪 2 回合。</div>
+      </div>
+      <div class="mut-ex">
+        <div class="diagram-title">对照：禁用范围（虚线 3×3）</div>
+        <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+          <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#eef0f2" fill="none"></path>
+          <rect x="1" y="1" width="118" height="118" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"></rect>
+          <use href="#i-virus" x="48" y="48" width="24" height="24"></use>
+          
+          
+          
+        </svg>
+        <div class="example-note">病毒可使虚线范围内一条敌方分支瘫痪 2 回合。</div>
+      </div>
+    </div>
+
+    <!-- 晶体 -->
+    <div class="mut-row">
+      <div>
+        <div class="mut-head"><div class="variant-icon"><svg class="icon-svg"><use href="#i-crystal"></use></svg></div><span class="variant-name">晶体</span><span class="variant-tag">爆发</span></div>
+        <div class="variant-desc">每回合可从以下组合中任选一项执行。</div>
+      </div>
+      <div class="mut-ex">
+        <table>
+          <tbody><tr><th>选项</th></tr>
+          <tr><td>移动 2 格</td></tr>
+          <tr><td>攻击 2 次</td></tr>
+          <tr><td>移动 1 格 + 攻击 1 次</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- 禁 -->
+    <div class="mut-row">
+      <div>
+        <div class="mut-head"><div class="variant-icon"><svg class="icon-svg"><use href="#i-ban"></use></svg></div><span class="variant-name">禁</span><span class="variant-tag">地形</span></div>
+        <div class="variant-desc">① 以自身为中心生成<strong>半径 2 格（共 13 格）的菱形禁区</strong>，对方无法进入；两禁区重叠部分任何人都无法进入。② 任何单位生长 / 移动至禁区视为撞墙，不可进入。③ 一局内只能存在 1 个禁。</div>
+      </div>
+      <div class="mut-ex">
+        <div class="diagram-title">对照：禁的菱形领域（13 格，虚线轮廓）</div>
+        <svg class="board" style="width:140px;" viewBox="0 0 200 200">
+          <path d="M40 0V200M80 0V200M120 0V200M160 0V200M0 40H200M0 80H200M0 120H200M0 160H200" stroke="#eef0f2" fill="none"></path>
+          <path d="M80 0 H120 V40 H160 V80 H200 V120 H160 V160 H120 V200 H80 V160 H40 V120 H0 V80 H40 V40 H80 Z" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"></path>
+          <use href="#i-ban" x="88" y="88" width="24" height="24"></use>
+        </svg>
+        <div class="example-note">虚线菱形（13 格）= 禁区（视为墙）：任何单位不能进入，主干也不能长进去。</div>
+      </div>
+    </div>
+
+    <!-- 基因 -->
+    <div class="mut-row">
+      <div>
+        <div class="mut-head"><div class="variant-icon"><svg class="icon-svg"><use href="#i-gene"></use></svg></div><span class="variant-name">基因</span><span class="variant-tag">机动</span></div>
+        <div class="variant-desc">① <strong>跳跃：</strong>可越过 1 格宽障碍（<strong>可斜跳</strong>），落点必须是合法空格；跳跃后用连接线把<strong>起跳基因与落点基因</strong>相连，<strong>连接线从障碍物上方穿过</strong>（不与障碍相连）。② <strong>肿瘤：</strong>在基因分支上分化肿瘤，画法为<strong>基因外套一个圆圈</strong>；肿瘤占一格，无法死亡、无法攻击，连锁死亡时不转化为尸体。</div>
+      </div>
+      <div class="mut-ex">
+        
+        <div class="before-after">
+          <svg class="board" style="width:144px;" viewBox="0 0 160 40">
+            <path d="M40 0V40M80 0V40M120 0V40" stroke="#eef0f2" fill="none"></path>
+            <line x1="33" y1="20" x2="47" y2="20" stroke="#212529" stroke-width="2.5" stroke-linecap="round"></line>
+            <use href="#i-gene" x="8" y="8" width="24" height="24"></use><use href="#i-gene" x="48" y="8" width="24" height="24"></use><use href="#i-trunk" x="88" y="8" width="24" height="24"></use>
+            <text x="140" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#adb5bd">空</text>
+          </svg>
+          <div class="ba-arrow">→</div>
+          <svg class="board" style="width:144px;" viewBox="0 0 160 40">
+            <path d="M40 0V40M80 0V40M120 0V40" stroke="#eef0f2" fill="none"></path>
+            <line x1="33" y1="20" x2="47" y2="20" stroke="#212529" stroke-width="2.5" stroke-linecap="round"></line>
+            <use href="#i-gene" x="8" y="8" width="24" height="24"></use><use href="#i-gene" x="48" y="8" width="24" height="24"></use>
+            <use href="#i-trunk" x="88" y="8" width="24" height="24"></use><use href="#i-gene" x="128" y="8" width="24" height="24"></use>
+            <line x1="70" y1="20" x2="127" y2="20" stroke="#212529" stroke-width="2.5" stroke-linecap="round"></line>
+          </svg>
+        </div>
+        <div class="before-after">
+          <svg class="board" style="width:108px;" viewBox="0 0 120 120">
+            <path d="M40 0V120M80 0V120M0 40H120M0 80H120" stroke="#eef0f2" fill="none"></path>
+            <use href="#i-gene" x="8" y="88" width="24" height="24"></use>
+            <use href="#i-trunk" x="48" y="48" width="24" height="24"></use>
+            <use href="#i-gene" x="88" y="8" width="24" height="24"></use>
+            <line x1="20" y1="100" x2="100" y2="20" stroke="#212529" stroke-width="2.5" stroke-linecap="round"></line>
+          </svg>
+          <svg class="board" style="width:108px;" viewBox="0 0 120 40">
+            <path d="M40 0V40M80 0V40" stroke="#eef0f2" fill="none"></path>
+            <g stroke="#212529" stroke-width="2.5" stroke-linecap="round">
+              <line x1="33" y1="20" x2="47" y2="20"></line><line x1="73" y1="20" x2="87" y2="20"></line>
+            </g>
+            <use href="#i-trunk" x="8" y="8" width="24" height="24"></use>
+            <use href="#i-gene" x="48" y="8" width="24" height="24"></use>
+            <use href="#i-tumor" x="88" y="8" width="24" height="24"></use>
+          </svg>
+        </div>
+        <div class="example-note">上：基因横跳时连接线穿过障碍物 左：斜跳时连接线同样穿过障碍物 右：肿瘤长在基因分支上。</div>
+      </div>
+    </div>
+
+    <!-- 炸弹 -->
+    <div class="mut-row">
+      <div>
+        <div class="mut-head"><div class="variant-icon"><svg class="icon-svg"><use href="#i-bomb"></use></svg></div><span class="variant-name">炸弹</span><span class="variant-tag">毁灭</span></div>
+        <div class="variant-desc">① 本分支被挤死时，头部触发<strong>半径 2 格（共 13 格）的菱形爆炸</strong>：范围内所有单位直接消失、不留尸体，本分支也全部消失。② 被普通攻击或病毒踩踏消灭时，不触发爆炸。</div>
+      </div>
+      <div class="mut-ex">
+        <div class="diagram-title">对照：被挤死后的爆炸范围（13 格，虚线轮廓）</div>
+        <svg class="board" style="width:140px;" viewBox="0 0 200 200">
+          <path d="M40 0V200M80 0V200M120 0V200M160 0V200M0 40H200M0 80H200M0 120H200M0 160H200" stroke="#eef0f2" fill="none"></path>
+          <path d="M80 0 H120 V40 H160 V80 H200 V120 H160 V160 H120 V200 H80 V160 H40 V120 H0 V80 H40 V40 H80 Z" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"></path>
+          <use href="#i-bomb" x="88" y="88" width="24" height="24"></use>
+        </svg>
+        <div class="example-note">虚线菱形（13 格）内所有单位直接消失、不留尸体；炸弹分支也全部消失。</div>
+      </div>
+    </div>
+  </section>
+
+  
+</div>
+
+
+</body></html>
