@@ -337,3 +337,84 @@ body {
     opacity: 0 !important;
     pointer-events: none;
 }
+
+/* ================================================= */
+/* ================= 多端排版自适应 ================= */
+/* ================================================= */
+
+/* 1. 平板端 / 窄屏笔记本 (宽度 761px - 1100px) */
+@media (min-width: 761px) and (max-width: 1100px) {
+    .game-layout {
+        flex-direction: column; /* 改为上下布局 */
+        margin: 10px;
+    }
+    .control-panel {
+        width: 100%;
+        flex-direction: row; /* 把控制面板横过来放 */
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .control-panel > h1, .control-panel > h3 {
+        width: 100%;
+    }
+    .actions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 按钮变成 3 列 */
+        width: 100%;
+    }
+    .canvas-container {
+        margin-top: 10px;
+    }
+}
+
+/* 2. 手机端 (宽度 <= 760px) */
+@media (max-width: 760px) {
+    .game-layout {
+        flex-direction: column;
+        margin: 0;
+        padding: 5px;
+    }
+
+    /* 核心改变：让游戏画布永远在最顶端 */
+    .canvas-container {
+        order: 1;
+        width: 100%;
+        padding: 0;
+    }
+
+    /* 把控制面板推到下面去 */
+    .control-panel {
+        order: 2;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* 手机上隐藏掉庞大的日志框和小地图，给画布腾出宝贵空间 */
+    .log-header, .log-container, .minimap-wrapper {
+        display: none;
+    }
+
+    /* 操作按钮变成双列网格，方便拇指点按 */
+    .actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    .action-btn {
+        padding: 10px 2px;
+        font-size: 13px;
+    }
+
+    /* 状态栏变紧凑 */
+    .status, .hint {
+        padding: 6px;
+        margin-top: 5px;
+        min-height: auto;
+    }
+
+    /* 关键：防止手机手指在画布上滑动时触发网页缩放 */
+    #gameCanvas {
+        touch-action: none;
+    }
+}
