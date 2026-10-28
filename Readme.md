@@ -1,14 +1,14 @@
 # Gridline War
 
-# Want to test your mathematical intuition and strategic thinking against your friends?  Welcome to **Gridline War** (格线战争). 
+# Want to test your mathematical intuition and strategic thinking against your friends?  
+Welcome to **Gridline War** (格线战争). 
 
 Originating from a simple pen-and-paper concept, this game has been transformed into a highly competitive digital battlefield. From elementary school students to top chess players, this game offers a rewarding challenge for all skill levels.
 
 ## Play Now
 
 Experience the game directly in your browser. No downloads or installations required:
-**[Click here to play Gridline War](http://lisiqi.qd.je/)** *(Note: Replace with your actual GitHub Pages link if different)*
-
+**[Click here to play Gridline War](http://lisiqi.qd.je/)** 
 ## Core Features
 
 *   **Instant P2P Multiplayer**: We abandoned heavy third-party networking libraries and built our networking layer from scratch using native WebRTC. Combined with a custom Deno edge signaling server, it establishes a peer-to-peer connection in milliseconds.
