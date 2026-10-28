@@ -1,13 +1,13 @@
 # Gridline War
 
-Want to test your mathematical intuition and strategic thinking against your friends? Welcome to **Gridline War** (格线战争). 
+# Want to test your mathematical intuition and strategic thinking against your friends?  Welcome to **Gridline War** (格线战争). 
 
 Originating from a simple pen-and-paper concept, this game has been transformed into a highly competitive digital battlefield. From elementary school students to top chess players, this game offers a rewarding challenge for all skill levels.
 
 ## Play Now
 
 Experience the game directly in your browser. No downloads or installations required:
-**[Click here to play Gridline War](https://li-eses.github.io/GridlineWar/)** *(Note: Replace with your actual GitHub Pages link if different)*
+**[Click here to play Gridline War](http://lisiqi.qd.je/)** *(Note: Replace with your actual GitHub Pages link if different)*
 
 ## Core Features
 
