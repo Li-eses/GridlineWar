@@ -1,6 +1,8 @@
 const rooms = new Map<string, Set<WebSocket>>();
 
-Deno.serve((req) => {
+const port = Number(Deno.env.get("PORT")) || 8000;
+
+Deno.serve({ port: port }, (req) => {
     const url = new URL(req.url);
     const roomId = url.searchParams.get('room');
 
