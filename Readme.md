@@ -1,5 +1,3 @@
-# Gridline War
-
 # Want to test your mathematical intuition and strategic thinking against your friends?  
 # Welcome to **Gridline War** (格线战争). 
 
