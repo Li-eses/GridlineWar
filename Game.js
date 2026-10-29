@@ -1198,16 +1198,6 @@
             }, 15000);
         };
 
-        ws.onmessage = (e) => { // 注意：这里是把后面的 ws.onmessage 也连上了
-
-        ws.onopen = () => {
-            $('net-status').innerText = `已进入房间 ${roomId}，等待对方加入...`;
-            // Keep-alive heartbeat.
-            ws._pingInterval = setInterval(() => {
-                if (ws.readyState === WebSocket.OPEN) ws.send('ping');
-            }, 15000);
-        };
-
         ws.onmessage = (e) => {
             if (e.data === 'pong') return;
             let msg;
