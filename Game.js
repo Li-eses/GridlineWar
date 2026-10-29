@@ -1184,18 +1184,21 @@
 
     // 1. Connect to the signalling server.
     function initSignaling(roomId) {
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        let host = window.location.host;
-
-        // file:// pages and local dev servers use the local signalling server on port 8000.
-        if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            host = 'localhost:8000';
-        }
-
-        const wsUrl = `${protocol}//${host}/?room=${roomId}`;
+        // ★ 直接写死云端信令服务器地址，不再自动识别网页域名
+        const wsUrl = `wss://gridlinewar.li-eses.deno.net/?room=${roomId}`;
 
         $('net-status').innerText = `正在连接信令服务器 (${wsUrl})...`;
         ws = new WebSocket(wsUrl);
+
+        ws.onopen = () => {
+            $('net-status').innerText = `已进入房间 ${roomId}，等待对方加入...`;
+            // Keep-alive heartbeat.
+            ws._pingInterval = setInterval(() => {
+                if (ws.readyState === WebSocket.OPEN) ws.send('ping');
+            }, 15000);
+        };
+
+        ws.onmessage = (e) => { // 注意：这里是把后面的 ws.onmessage 也连上了
 
         ws.onopen = () => {
             $('net-status').innerText = `已进入房间 ${roomId}，等待对方加入...`;
