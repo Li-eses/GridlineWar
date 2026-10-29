@@ -6,7 +6,7 @@ Originating from a simple pen-and-paper concept, this game has been transformed 
 ## Play Now
 
 Experience the game directly in your browser. No downloads or installations required:
-**[Click here to play Gridline War]([https://gridlinewar.pages.dev/])** 
+**[Click here to play Gridline War](https://gridlinewar.pages.dev/)**
 ## Core Features
 
 *   **Instant P2P Multiplayer**: We abandoned heavy third-party networking libraries and built our networking layer from scratch using native WebRTC. It features instruction-level state synchronization with cryptographic hash verification, ensuring seamless peer-to-peer connection and anti-desync protection.
