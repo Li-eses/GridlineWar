@@ -17,26 +17,100 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10
+    z-index: 10;
+    padding: 20px;
 }
 
+/* ================= 核心：左右双栏弹窗 ================= */
 .modal {
     background: #34495e;
-    padding: 32px;
     border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 15px 30px #0008;
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+}
+
+.modal-left {
+    padding: 32px;
+    flex: 1;
     min-width: 340px;
     text-align: center;
-    box-shadow: 0 15px 30px #0008
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-right {
+    background: #2c3e50;
+    padding: 32px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 1px solid #1a252f;
+}
+
+.security-notice {
+    background: rgba(46, 204, 113, 0.1);
+    border: 1px dashed #2ecc71;
+    border-radius: 8px;
+    padding: 15px;
+    color: #2ecc71;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.security-notice a {
+    color: #2ecc71;
+    font-weight: bold;
+    text-decoration: underline;
+    word-break: break-all;
+}
+
+.safe-desc {
+    font-size: 12px;
+    color: #7f8c8d;
+    line-height: 1.4;
+}
+
+.credits {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.credits h3 {
+    color: #aaa;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+}
+
+.credits p {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #ddd;
+}
+
+.credits hr {
+    border: 0;
+    border-top: 1px solid #444;
+    margin: 15px 0;
 }
 
 .modal label {
     display: block;
-    margin: 14px
+    margin: 14px;
 }
 
 .modal select {
     padding: 7px;
-    margin-left: 8px
+    margin-left: 8px;
 }
 
 .btn-main {
@@ -49,13 +123,19 @@ body {
     background: #3498db;
     color: white;
     font-weight: 700;
-    cursor: pointer
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-main:hover {
+    opacity: 0.9;
 }
 
 .btn-main.advanced {
     background: #9b59b6
 }
 
+/* ================= 游戏内界面 ================= */
 .game-layout {
     display: flex;
     gap: 18px;
@@ -147,18 +227,6 @@ body {
     font: 12px Consolas, monospace
 }
 
-.log-err {
-    color: #e74c3c
-}
-
-.log-warn {
-    color: #f1c40f
-}
-
-.log-success {
-    color: #2ecc71
-}
-
 .minimap-wrapper {
     display: flex;
     justify-content: center;
@@ -194,37 +262,17 @@ body {
     border: 2px solid #7f8c8d
 }
 
-.p1-color {
-    color: #3498db
-}
+.p1-color { color: #3498db }
+.p2-color { color: #e67e22 }
 
-.p2-color {
-    color: #e67e22
-}
-
-@media (max-width: 760px) {
-    .game-layout {
-        flex-direction: column;
-        margin: 0;
-        border-radius: 0
-    }
-
-    .control-panel {
-        width: 100%
-    }
-}
-
-.log-p1 {
-    color: #5dade2
-}
-
-.log-p2 {
-    color: #f0b27a
-}
-
-.log-success {
-    color: #58d68d
-}
+.log-p1 { color: #5dade2 }
+.log-p2 { color: #f0b27a }
+.log-success { color: #58d68d }
+.log-sys { color: #9b59b6; font-weight: bold; }
+.log-bot { color: #e67e22; font-style: italic; }
+.log-rule { color: #f1c40f; }
+.log-combat { color: #e74c3c; font-weight: bold; }
+.log-warn { color: #f39c12; }
 
 .log-container div {
     padding: 2px 0;
@@ -233,124 +281,15 @@ body {
     overflow-wrap: anywhere
 }
 
-/* 追加在文件末尾 */
-.log-sys { color: #9b59b6; font-weight: bold; } /* 系统紫 */
-.log-p1 { color: #5dade2; }                     /* P1 蓝 */
-.log-p2 { color: #f0b27a; }                     /* P2 橙 */
-.log-bot { color: #e67e22; font-style: italic; } /* AI 橙 */
-.log-rule { color: #f1c40f; }                   /* 规则黄 */
-.log-combat { color: #e74c3c; font-weight: bold; } /* 战斗红 */
-.log-success { color: #2ecc71; }                /* 成功绿 */
-.log-warn { color: #f39c12; }                   /* 警告橙黄 */
-
-/* ================= 酷炫启动界面 (Splash Screen) ================= */
-#splash-screen {
-    position: fixed;
-    inset: 0;
-    background-color: #0d1117;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Courier New', Courier, monospace;
-    transition: opacity 1s ease-in-out;
-    overflow: hidden;
-}
-
-/* 赛博朋克网格背景 */
-#splash-screen::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: 
-        linear-gradient(rgba(52, 152, 219, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(52, 152, 219, 0.1) 1px, transparent 1px);
-    background-size: 30px 30px;
-    opacity: 0.5;
-    animation: gridMove 10s linear infinite;
-}
-
-@keyframes gridMove {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(30px); }
-}
-
-/* 启动画面文字样式 */
-.splash-text {
-    position: relative;
-    z-index: 10;
-    color: #fff;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1.5s ease forwards;
-}
-
-.splash-title {
-    font-size: 3rem;
-    font-weight: bold;
-    letter-spacing: 5px;
-    color: #f1c40f;
-    text-shadow: 0 0 10px rgba(241, 196, 15, 0.5), 0 0 20px rgba(241, 196, 15, 0.3);
-    margin-bottom: 30px;
-    animation-delay: 0.5s;
-}
-
-.splash-credit {
-    font-size: 1.2rem;
-    margin: 10px 0;
-    color: #3498db;
-    text-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
-    animation-delay: 1.5s;
-}
-
-.splash-credit2 {
-    font-size: 1.2rem;
-    margin: 10px 0;
-    color: #e67e22;
-    text-shadow: 0 0 8px rgba(230, 126, 34, 0.5);
-    animation-delay: 2.2s;
-}
-
-.splash-thanks {
-    position: absolute;
-    bottom: 30px;
-    font-size: 0.9rem;
-    color: #7f8c8d;
-    opacity: 0;
-    animation: fadeIn 1.5s ease forwards;
-    animation-delay: 3s;
-    z-index: 10;
-}
-
-@keyframes fadeInUp {
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-    to { opacity: 1; }
-}
-
-/* 淡出动画类 */
-.fade-out {
-    opacity: 0 !important;
-    pointer-events: none;
-}
-
-/* ================================================= */
-/* ================= 多端排版自适应 ================= */
-/* ================================================= */
-
-/* 1. 平板端 / 窄屏笔记本 (宽度 761px - 1100px) */
+/* ================= 平板端 / 窄屏笔记本优化 (761px - 1100px) ================= */
 @media (min-width: 761px) and (max-width: 1100px) {
     .game-layout {
-        flex-direction: column; /* 改为上下布局 */
+        flex-direction: column;
         margin: 10px;
     }
     .control-panel {
         width: 100%;
-        flex-direction: row; /* 把控制面板横过来放 */
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
     }
@@ -359,7 +298,7 @@ body {
     }
     .actions {
         display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 按钮变成 3 列 */
+        grid-template-columns: repeat(3, 1fr);
         width: 100%;
     }
     .canvas-container {
@@ -367,55 +306,55 @@ body {
     }
 }
 
-/* 2. 手机端 (宽度 <= 760px) */
+/* ================= 手机端优化 (<= 760px) ================= */
 @media (max-width: 760px) {
+    .modal {
+        flex-direction: column;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .modal-right {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #1a252f;
+        padding: 20px;
+    }
+    .modal-left {
+        padding: 20px;
+    }
     .game-layout {
         flex-direction: column;
         margin: 0;
         padding: 5px;
     }
-
-    /* 核心改变：让游戏画布永远在最顶端 */
     .canvas-container {
         order: 1;
         width: 100%;
         padding: 0;
     }
-
-    /* 把控制面板推到下面去 */
     .control-panel {
         order: 2;
         width: 100%;
         margin-top: 10px;
     }
-
-    /* 手机上隐藏掉庞大的日志框和小地图，给画布腾出宝贵空间 */
     .log-header, .log-container, .minimap-wrapper {
         display: none;
     }
-
-    /* 操作按钮变成双列网格，方便拇指点按 */
     .actions {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 6px;
     }
-
     .action-btn {
         padding: 10px 2px;
         font-size: 13px;
     }
-
-    /* 状态栏变紧凑 */
     .status, .hint {
         padding: 6px;
         margin-top: 5px;
         min-height: auto;
     }
-
-    /* 关键：防止手机手指在画布上滑动时触发网页缩放 */
     #gameCanvas {
         touch-action: none;
     }
 }
-/*this is a test*/
