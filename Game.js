@@ -1184,10 +1184,15 @@
 
     // 1. Connect to the signalling server.
     function initSignaling(roomId) {
-        // ★ 直接写死云端信令服务器地址，不再自动识别网页域名
+        // =====================================================================
+        // ⚠️ WARNING / 警告 ⚠️
+        // 下面的 wsUrl 是我们云端信令服务器的真实地址，绝对不能改成 localhost 或动态获取！
+        // Carson，如果你在改代码，请保留这一行，否则大家都联不了机！
+        // =====================================================================
         const wsUrl = `wss://gridlinewar.li-eses.deno.net/?room=${roomId}`;
 
         $('net-status').innerText = `正在连接信令服务器 (${wsUrl})...`;
+        // ... 下面的代码不动 ...
         ws = new WebSocket(wsUrl);
 
         ws.onopen = () => {

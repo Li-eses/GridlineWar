@@ -31,6 +31,7 @@ body {
     overflow: hidden;
     max-width: 900px;
     width: 100%;
+    position: relative;
 }
 
 .modal-left {
@@ -46,7 +47,7 @@ body {
 .modal-right {
     background: #2c3e50;
     padding: 32px;
-    width: 300px;
+    width: 320px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -111,6 +112,7 @@ body {
 .modal select {
     padding: 7px;
     margin-left: 8px;
+    border-radius: 4px;
 }
 
 .btn-main {
@@ -135,7 +137,133 @@ body {
     background: #9b59b6
 }
 
-/* ================= 游戏内界面 ================= */
+/* ================= 选人界面 (Draft) 专属样式 ================= */
+.draft-modal {
+    flex-direction: column;
+    max-width: 800px;
+    padding: 30px;
+    text-align: center;
+}
+
+.draft-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.draft-card {
+    background: #2c3e50;
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s;
+    color: #fff;
+    font-family: inherit;
+}
+
+.draft-card:hover:not(:disabled) {
+    border-color: #3498db;
+    transform: translateY(-2px);
+}
+
+.draft-card.selected {
+    border-color: #f1c40f;
+    background: rgba(241, 196, 15, 0.1);
+}
+
+.draft-card.banned {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+.draft-glyph {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #3498db;
+}
+
+.draft-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.draft-desc {
+    font-size: 11px;
+    color: #aaa;
+    text-align: center;
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+.draft-flag {
+    font-size: 12px;
+    color: #f1c40f;
+    font-weight: bold;
+}
+
+.draft-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.draft-status {
+    color: #e74c3c;
+    margin-top: 15px;
+    min-height: 20px;
+    font-weight: bold;
+}
+
+.draft-summary {
+    background: #2c3e50;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.draft-loadout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.draft-chip {
+    background: #34495e;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 1px solid #555;
+}
+
+.draft-banned-note {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.draft-curtain {
+    background: #1a252f;
+    padding: 30px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+/* ================= 游戏主界面 ================= */
 .game-layout {
     display: flex;
     gap: 18px;
@@ -146,7 +274,7 @@ body {
 }
 
 .control-panel {
-    width: 275px;
+    width: 290px;
     flex: none;
     display: flex;
     flex-direction: column
@@ -158,18 +286,24 @@ body {
     border-radius: 7px
 }
 
+.status p { margin: 4px 0; }
+
 .actions {
-    display: flex;
-    flex-direction: column;
-    gap: 8px
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
 }
 
 .action-btn {
-    padding: 10px;
+    padding: 10px 4px;
     border: 0;
     border-radius: 6px;
     font-weight: 700;
-    cursor: pointer
+    cursor: pointer;
+    font-size: 12px;
+    background: #3498db;
+    color: #fff;
 }
 
 .action-btn:disabled, .action-btn.disabled {
@@ -179,18 +313,49 @@ body {
     opacity: .75
 }
 
-.variant-panel {
-    margin-top: 12px;
-    background: #8e44ad;
+/* ★ Ziyu 新增的面板 */
+.loadout-panel {
+    background: #2c3e50;
     padding: 10px;
-    border-radius: 6px
+    border-radius: 7px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.loadout-row { margin-bottom: 8px; }
+.loadout-head { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: bold; }
+.loadout-ban { color: #e74c3c; font-size: 11px; }
+.loadout-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #34495e;
+    border: 1px solid #555;
+}
+.chip.st-active { border-color: #2ecc71; color: #2ecc71; }
+.chip.st-lost { opacity: 0.5; text-decoration: line-through; border-color: #e74c3c; color: #e74c3c; }
+.chip.st-not-picked { opacity: 0.3; filter: grayscale(1); }
+.chip.st-available { border-color: #3498db; color: #3498db; }
+
+.count-offer-panel {
+    background: #e74c3c22;
+    border: 1px dashed #e74c3c;
+    padding: 10px;
+    border-radius: 7px;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .variant-panel select {
     display: block;
     width: 100%;
     margin-top: 6px;
-    padding: 6px
+    padding: 6px;
+    border-radius: 4px;
 }
 
 .hint {
@@ -215,7 +380,9 @@ body {
     background: none;
     color: #aaa;
     border: 1px solid #777;
-    border-radius: 4px
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 2px 6px;
 }
 
 .log-container {
@@ -239,7 +406,8 @@ body {
     background: #e74c3c;
     color: white;
     border: 0;
-    border-radius: 5px
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .canvas-container {
@@ -267,7 +435,7 @@ body {
 
 .log-p1 { color: #5dade2 }
 .log-p2 { color: #f0b27a }
-.log-success { color: #58d68d }
+.log-success { color: #2ecc71 }
 .log-sys { color: #9b59b6; font-weight: bold; }
 .log-bot { color: #e67e22; font-style: italic; }
 .log-rule { color: #f1c40f; }
@@ -281,7 +449,7 @@ body {
     overflow-wrap: anywhere
 }
 
-/* ================= 平板端 / 窄屏笔记本优化 (761px - 1100px) ================= */
+/* ================= 多端适配 ================= */
 @media (min-width: 761px) and (max-width: 1100px) {
     .game-layout {
         flex-direction: column;
@@ -293,20 +461,12 @@ body {
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .control-panel > h1, .control-panel > h3 {
-        width: 100%;
-    }
-    .actions {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        width: 100%;
-    }
-    .canvas-container {
-        margin-top: 10px;
-    }
+    .control-panel > h1, .control-panel > h3 { width: 100%; }
+    .status, .hint, .count-offer-panel, .loadout-panel { width: 100%; }
+    .actions { grid-template-columns: repeat(4, 1fr); width: 100%; }
+    .canvas-container { margin-top: 10px; }
 }
 
-/* ================= 手机端优化 (<= 760px) ================= */
 @media (max-width: 760px) {
     .modal {
         flex-direction: column;
@@ -319,42 +479,16 @@ body {
         border-top: 1px solid #1a252f;
         padding: 20px;
     }
-    .modal-left {
-        padding: 20px;
-    }
+    .modal-left { padding: 20px; }
     .game-layout {
         flex-direction: column;
         margin: 0;
         padding: 5px;
     }
-    .canvas-container {
-        order: 1;
-        width: 100%;
-        padding: 0;
-    }
-    .control-panel {
-        order: 2;
-        width: 100%;
-        margin-top: 10px;
-    }
-    .log-header, .log-container, .minimap-wrapper {
-        display: none;
-    }
-    .actions {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-    }
-    .action-btn {
-        padding: 10px 2px;
-        font-size: 13px;
-    }
-    .status, .hint {
-        padding: 6px;
-        margin-top: 5px;
-        min-height: auto;
-    }
-    #gameCanvas {
-        touch-action: none;
-    }
+    .canvas-container { order: 1; width: 100%; padding: 0; }
+    .control-panel { order: 2; width: 100%; margin-top: 10px; }
+    .log-header, .log-container, .minimap-wrapper { display: none; }
+    .actions { grid-template-columns: repeat(3, 1fr); }
+    #gameCanvas { touch-action: none; }
+    .draft-cards { grid-template-columns: repeat(2, 1fr); }
 }

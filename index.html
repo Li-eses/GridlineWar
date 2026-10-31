@@ -3,44 +3,36 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>格线战争 Release v1.2</title>
+    <title>格线战争 Release v1.3</title>
     <link rel="stylesheet" href="style.css">
-    <!-- ★ 历史垃圾已彻底清除，纯原生 WebRTC！ -->
 </head>
 <body>
 <div id="start-screen" class="overlay">
     <div class="modal">
-        <!-- 左侧：游戏选择 -->
+        <!-- 左侧：游戏设置 -->
         <div class="modal-left">
             <h1>格线战争</h1>
             <p>按规则说明书实现</p>
 
-            <!-- 给 select 加上 id，消除 WebStorm 警告 -->
-            <label>地图
-                <select id="map-size" name="map-size">
-                    <option value="20">20 × 20</option>
-                    <option value="24">24 × 24</option>
-                    <option value="40" selected>40 × 30</option>
-                </select>
-            </label>
+            <label>地图 <select id="map-size" name="map-size">
+                <option value="20">20 × 20</option>
+                <option value="24">24 × 24</option>
+                <option value="40" selected>40 × 30</option>
+            </select></label>
 
-            <label>对手
-                <select id="ai-select" name="ai-select" onchange="togglePeerPanel()">
-                    <option value="PVP">本地双人 PvP</option>
-                    <option value="EASY">简单 AI</option>
-                    <option value="HARD">困难 AI</option>
-                    <option value="MASTER">大师 AI</option>
-                    <option value="PEER">P2P 联机 (跨网)</option>
-                </select>
-            </label>
+            <label>对手 <select id="ai-select" name="ai-select" onchange="togglePeerPanel()">
+                <option value="PVP">本地双人 PvP</option>
+                <option value="EASY">简单 AI</option>
+                <option value="HARD">困难 AI</option>
+                <option value="MASTER">大师 AI</option>
+                <!-- ★ Ziyu 新增的宗师级 AI -->
+                <option value="GRANDMASTER">宗师 AI (Neural Net)</option>
+                <option value="PEER">P2P 联机 (跨网)</option>
+            </select></label>
 
-            <label>回合数限制
-                <!-- 给 input 加上 id 和 name -->
-                <input type="number" id="turn-limit" name="turn-limit" value="0" min="0" style="padding: 7px; border-radius: 5px; border: none; width: 80px; margin-left: 8px;">
-                (0为无限制)
-            </label>
+            <label>回合数限制 <input type="number" id="turn-limit" name="turn-limit" value="0" min="0" style="padding: 7px; border-radius: 5px; border: none; width: 80px; margin-left: 8px;"> (0为无限制)</label>
 
-            <!-- 联机专用面板，默认隐藏 -->
+            <!-- 联机专用面板 -->
             <div id="peer-panel" style="display:none; margin-top: 15px; background: #2c3e50; padding: 15px; border-radius: 8px; width: 100%;">
                 <div style="margin-bottom: 10px;">
                     <button class="btn-main" onclick="createOnlineRoom()" style="background:#2ecc71; margin: 0; width: 100%;">创建房间 (作为房主)</button>
@@ -54,16 +46,14 @@
 
             <div id="game-start-buttons" style="margin-top: 20px; width: 100%;">
                 <button class="btn-main" onclick="startGame('CLASSIC')">经典规则</button>
-                <button class="btn-main advanced" onclick="startGame('ADVANCED')">进阶变异体</button>
+                <button class="btn-main advanced" onclick="startGame('ADVANCED')">进阶变异体 (带选人)</button>
             </div>
 
             <button class="btn-main" onclick="window.open('rule.html', '_blank')" style="background: #8e44ad; margin-top: 10px; width: 100%;">📖 官方规则书</button>
         </div>
 
         <!-- 右侧：安全提示与鸣谢 -->
-        <!-- 右侧：安全提示与鸣谢 -->
         <div class="modal-right">
-            <!-- 上半部分：安全通道 & GitHub 链接 -->
             <div>
                 <div class="security-notice">
                     🔒 Want to visit a Safe site (HTTPS)?<br>
@@ -71,7 +61,6 @@
                 </div>
                 <p class="safe-desc" style="margin-bottom: 15px;">Experience the game on our ultra-fast, secure cloud network.</p>
 
-                <!-- ★ 移上来的 GitHub 链接按钮 -->
                 <p style="margin-top: 15px;">
                     <a href="https://github.com/lisiqi-sh/GridlineWar" target="_blank" style="color: #3498db; text-decoration: none; display: inline-block; padding: 10px 12px; background: rgba(52, 152, 219, 0.1); border: 1px dashed #3498db; border-radius: 6px; width: 100%; box-sizing: border-box; text-align: center; transition: all 0.2s ease;">
                         <strong style="font-size: 14px;">Find us at GitHub</strong><br>
@@ -80,16 +69,13 @@
                 </p>
             </div>
 
-            <!-- 下半部分：鸣谢名单 -->
             <div class="credits">
                 <h3>PROJECT CREDITS</h3>
                 <p><strong>Game Design:</strong> Jason Lee</p>
-                <p><strong>Frontend, Network & Rendering:</strong> Jimmy Lee</p>
-                <p><strong>Engine & AI Architect:</strong> Liu Ziyu</p>
+                <p><strong>Frontend & Network:</strong> Jimmy Lee</p>
+                <p><strong>Engine & AI Architect:</strong> Carson Liu</p>
                 <p style="margin-top: 10px; color: #7f8c8d; font-size: 12px;">Class 9</p>
-
                 <hr>
-
                 <p>Powered by & Special Thanks to</p>
                 <p style="font-size: 12px; color: #aaa; line-height: 1.6;">
                     <strong>Deno Land Inc.</strong> (Edge Computing)<br>
@@ -102,22 +88,60 @@
     </div>
 </div>
 
-<div id="game-over-screen" class="overlay" style="display:none">
-    <div class="modal" style="flex-direction: column;">
-        <div class="modal-left">
-            <h1 id="winner-title">游戏结束</h1>
-            <p id="winner-reason"></p>
-            <button class="btn-main" onclick="location.reload()" style="margin-top: 20px;">再来一局</button>
+<!-- ★ Ziyu 新增：禁用与选人界面 (Draft Lobby) -->
+<div id="draft-screen" class="overlay" style="display:none; z-index: 20;">
+    <div class="modal draft-modal">
+        <h2 id="draft-title">禁用阶段 ① 封禁</h2>
+        <p id="draft-subtitle" style="color: #aaa; margin-bottom: 20px;"></p>
+        <div id="draft-summary" class="draft-summary"></div>
+
+        <div id="draft-curtain" class="draft-curtain" style="display:none;">
+            <p id="draft-curtain-text"></p>
+            <button class="btn-main" id="draft-curtain-btn" style="width: auto; margin: 20px auto;">点击开始选择</button>
         </div>
+
+        <div id="draft-cards" class="draft-cards"></div>
+
+        <div id="draft-buttons" class="draft-buttons">
+            <button class="btn-main" id="draft-random" style="background: #7f8c8d; width: auto;">随机</button>
+            <button class="btn-main" id="draft-confirm" style="background: #2ecc71; width: auto;">确认</button>
+        </div>
+        <button class="btn-main" id="draft-start" style="background: #3498db; display: none; width: 200px; margin: 20px auto 0;">开始布阵</button>
+
+        <div id="draft-status" class="draft-status"></div>
+        <button id="draft-back" class="btn-clear" style="margin-top: 20px; margin-left: auto; margin-right: auto; display: block;">返回主菜单</button>
+    </div>
+</div>
+
+<!-- 游戏结束界面 -->
+<div id="game-over-screen" class="overlay" style="display:none">
+    <div class="modal" style="flex-direction: column; max-width: 600px;">
+        <h1 id="winner-title">游戏结束</h1>
+        <p id="winner-reason" style="margin-bottom: 20px;"></p>
+        <button class="btn-main" onclick="location.reload()" style="width: 200px; margin: 0 auto;">再来一局</button>
+
+        <!-- ★ Ziyu 新增：复盘与导出 -->
+        <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+            <button class="btn-main" id="btn-view-board" style="background: #555; width: auto; padding: 8px 15px;">查看棋盘</button>
+            <button class="btn-main" id="btn-export-panel" style="background: #e67e22; width: auto; padding: 8px 15px;">导出棋谱</button>
+        </div>
+        <button class="btn-main" id="btn-show-result" style="background: #2980b9; width: 200px; margin: 10px auto 0; display: none;">返回结果</button>
     </div>
 </div>
 
 <div class="game-layout">
-    <aside class="control-panel"><h1>格线战争</h1>
+    <aside class="control-panel">
+        <h1>格线战争</h1>
         <div class="status">
-            <p>当前玩家: <span id="player-display" class="p1-color">蓝色 (P1)</span></p>
+            <p><span id="player-label">当前玩家:</span> <span id="player-display" class="p1-color">蓝色 (P1)</span></p>
             <p id="turn-display" style="font-size: 13px; color: #aaa;"></p>
+            <!-- ★ Ziyu 新增：空气数显示 -->
+            <p id="air-display" style="font-size: 13px; color: #f39c12; margin-top: 5px; font-weight: bold;">气：布阵后显示</p>
         </div>
+
+        <!-- ★ Ziyu 新增：变异体状态面板 -->
+        <div id="loadout-panel" class="loadout-panel" style="display:none;"></div>
+
         <h3>操作</h3>
         <div class="actions">
             <button id="btn-grow-trunk" class="action-btn disabled" disabled>🌱 长主干（最多3格）</button>
@@ -125,28 +149,58 @@
             <button id="btn-attack" class="action-btn disabled" disabled>💥 攻击</button>
             <button id="btn-disable" class="action-btn disabled" disabled>🦠 病毒禁用分支</button>
             <button id="btn-grow-tumor" class="action-btn disabled" disabled>⊗ 分化肿瘤</button>
+
+            <!-- ★ Ziyu 新增：空气数相关按钮 -->
+            <button id="btn-offer-count" class="action-btn disabled" disabled>🌬️ 请求数空气</button>
+
             <button id="btn-pass" class="action-btn disabled" disabled>⏭️ 结束行动</button>
         </div>
-        <div id="variant-panel" class="variant-panel" style="display:none"><label>新分支变异体<select
-                id="variant-select">
-            <option value="0">普通</option>
-            <option value="1">噬体</option>
-            <option value="2">病毒</option>
-            <option value="3">晶体</option>
-            <option value="4">基因</option>
-            <option value="5">炸弹</option>
-            <option value="6">禁</option>
-        </select></label></div>
-        <div class="hint"><p id="hint-text"></p>
+
+        <!-- ★ Ziyu 新增：显示气按钮 -->
+        <button id="btn-air-view" class="action-btn" style="margin-top: 5px; background: #34495e; border: 1px solid #555;">👁 显示气</button>
+
+        <div id="variant-panel" class="variant-panel" style="display:none">
+            <label>新分支变异体
+                <select id="variant-select">
+                    <option value="0">普通</option>
+                    <option value="1">噬体</option>
+                    <option value="2">病毒</option>
+                    <option value="3">晶体</option>
+                    <option value="4">基因</option>
+                    <option value="5">炸弹</option>
+                    <option value="6">禁</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="hint">
+            <p id="hint-text"></p>
             <p id="hint-hover"></p>
-            <p id="hint-msg"></p></div>
+            <p id="hint-msg"></p>
+        </div>
+
+        <!-- ★ Ziyu 新增：对方数空气面板 -->
+        <div id="count-offer-panel" class="count-offer-panel" style="display:none;">
+            <p id="count-offer-text" style="color: #e74c3c; font-weight: bold;"></p>
+            <p id="count-offer-outcome" style="font-size: 12px; color: #aaa; margin-bottom: 10px;"></p>
+            <div style="display: flex; gap: 10px;">
+                <button id="btn-accept-count" class="btn-main" style="background: #2ecc71; margin: 0; padding: 5px;">同意</button>
+                <button id="btn-decline-count" class="btn-main" style="background: #e74c3c; margin: 0; padding: 5px;">拒绝</button>
+            </div>
+        </div>
+
         <div class="log-header"><span>系统控制台</span>
-            <button class="btn-clear" onclick="document.getElementById('log-box').innerHTML=''">清空</button>
+            <div>
+                <!-- ★ Ziyu 新增：导出棋谱按钮 -->
+                <button class="btn-clear" id="btn-export-record" style="margin-right: 5px;">导出棋谱</button>
+                <button class="btn-clear" onclick="document.getElementById('log-box').innerHTML=''">清空</button>
+            </div>
         </div>
         <div id="log-box" class="log-container"></div>
         <div class="minimap-wrapper">
             <canvas id="miniMapCanvas"></canvas>
         </div>
+
         <button class="btn-restart" onclick="location.reload()">重新开始</button>
         <button class="btn-restart" onclick="window.open('rule.html', '_blank')" style="background: #8e44ad; margin-top: 5px;">📖 查阅官方规则书</button>
     </aside>
@@ -156,6 +210,7 @@
 </div>
 
 <script src="engine.js"></script>
+<script src="nn-weights.js"></script>
 <script src="ai.js"></script>
 <script src="Game.js"></script>
 </body>
